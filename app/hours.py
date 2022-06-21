@@ -30,7 +30,7 @@ class Hours:
             all_hours = (
                 await HoursModel.query.where(HoursModel.user_id == user_id)
                 .where(HoursModel.date <= date.today())
-                .where(HoursModel.date >= (date.today() - timedelta(days=7)))
+                .where(HoursModel.date.isocalendar().week == date.today().isocalendar().week)
                 .gino.all()
             )
         except AttributeError as e:
